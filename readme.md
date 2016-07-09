@@ -19,6 +19,16 @@ $builder = new Client("127.0.0.1", 25575, "password");
 $builder->exec("/say hello world");
 ```
 
+You need the following settings in your `server.properties` file:
+
+```ini
+enable-query=true
+enable-rcon=true
+query.port=25565
+rcon.port=25575
+rcon.password=password
+```
+
 ## Versioning
 
 This library follows [Semver](http://semver.org). According to Semver, you will be able to upgrade to any minor or patch version of this library without any breaking changes to the public API. Semver also requires that we clearly define the public API for this library.
