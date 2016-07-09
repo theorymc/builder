@@ -35,6 +35,21 @@ class Listener implements PHPUnit_Framework_TestListener
     private $run = false;
 
     /**
+     * @var string
+     */
+    private $jar = "server.1.10.jar";
+
+    /**
+     * @var string
+     */
+    private $xmx = "256M";
+
+    /**
+     * @var string
+     */
+    private $xms = "256M";
+
+    /**
      * @inheritdoc
      *
      * @param PHPUnit_Framework_Test $test
@@ -108,11 +123,16 @@ class Listener implements PHPUnit_Framework_TestListener
         $this->run = true;
 
         $this->startServer();
+
+        sleep(1);
+
         $this->waitForServer();
     }
 
     /**
      * Starts the Minecraft server and stores the PID of each related process.
+     *
+     * @throws Exception
      */
     private function startServer()
     {
@@ -127,7 +147,7 @@ class Listener implements PHPUnit_Framework_TestListener
             sleep(1);
 
             $this->log("Starting server...");
-            $this->exec("cd {$path}; java -Xmx1024M -Xms1024M -jar {$path}/server.1.10.jar --nogui hash={$hash}");
+            $this->exec("cd {$path}; java -Xmx{$this->xmx} -Xms{$this->xms} -jar {$path}/{$this->jar} --nogui hash={$hash}");
 
             sleep(1);
 
@@ -139,6 +159,8 @@ class Listener implements PHPUnit_Framework_TestListener
                     $parts = explode(" ", $line);
                     $this->pid[] = $parts[0];
                 }
+            } else {
+                throw new Exception("No processes running");
             }
         }
     }
@@ -193,6 +215,10 @@ class Listener implements PHPUnit_Framework_TestListener
             usleep($this->delay);
 
             $path = realpath(__DIR__ . "/server/logs/latest.log");
+
+            if (empty($path) || !file_exists($path)) {
+                throw new Exception("Log file missing");
+            }
 
             foreach (file($path) as $line) {
                 if (stristr($line, "[Server thread/INFO]: Done")) {
