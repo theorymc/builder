@@ -1,0 +1,10 @@
+<phpunit
+    bootstrap="vendor/autoload.php"
+    colors="true">
+    <testsuite>
+        <directory>tests</directory>
+    </testsuite>
+    <listeners>
+        <listener class="Theory\Builder\Listener" file="src/Listener.php"/>
+    </listeners>
+</phpunit>
