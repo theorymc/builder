@@ -1,6 +1,6 @@
 <?php
 
-namespace Theory\Builder;
+namespace Theory\Builder\Test;
 
 use Exception;
 use PHPUnit_Framework_AssertionFailedError;
@@ -106,7 +106,7 @@ class Listener implements PHPUnit_Framework_TestListener
         }
 
         $this->run = true;
-        
+
         $this->startServer();
         $this->waitForServer();
     }
@@ -118,7 +118,7 @@ class Listener implements PHPUnit_Framework_TestListener
     {
         if (!$this->pid) {
             $hash = spl_object_hash($this);
-            $path = realpath(__DIR__ . "/../tests/server");
+            $path = realpath(__DIR__ . "/server");
 
             $this->log("Removing old logs...");
             $this->exec("rm {$path}/logs/*.gz");
@@ -192,7 +192,7 @@ class Listener implements PHPUnit_Framework_TestListener
         while ($tick < $this->limit) {
             usleep($this->delay);
 
-            $path = realpath(__DIR__ . "/../tests/server/logs/latest.log");
+            $path = realpath(__DIR__ . "/server/logs/latest.log");
 
             foreach (file($path) as $line) {
                 if (stristr($line, "[Server thread/INFO]: Done")) {

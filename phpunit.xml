@@ -5,6 +5,6 @@
         <directory>tests</directory>
     </testsuite>
     <listeners>
-        <listener class="Theory\Builder\Listener" file="src/Listener.php"/>
+        <listener class="Theory\Builder\Test\Listener" file="tests/Listener.php"/>
     </listeners>
 </phpunit>
