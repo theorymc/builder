@@ -1,4 +1,7 @@
 {
+    "name": "theory/builder",
+    "description": "An object-oriented approach to server modification",
+    "license": "MIT",
     "require": {
         "php": "^5.6|^7.0",
         "xpaw/php-minecraft-query": "^1.0",
