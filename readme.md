@@ -15,7 +15,7 @@ $ composer require theory/builder
 ## Examples
 
 ```php
-$builder = new Client("127.0.0.1", 25575, $password = "hello", $timeout = 3);
+$builder = new Client("127.0.0.1", 25575, "password");
 $builder->exec("/say hello world");
 ```
 
